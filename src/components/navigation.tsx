@@ -18,6 +18,11 @@ const Navigation = ({
           passHref>
           <button className="border border-white p-2">view list</button>
         </Link>
+        <Link
+          href="/other-lists"
+          passHref>
+          <button className="border border-white p-2">view other list</button>
+        </Link>
       </div>
       <div>{children}</div>
     </div>

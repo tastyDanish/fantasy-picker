@@ -5,7 +5,7 @@ import json
 def convert_value(key, value):
     """Convert string value based on the key."""
     if key == 'bye':
-        return int(value)    # Convert to int if there's no decimal point
+        return  int(value) if value else -1    # Convert to int if there's no decimal point
     return value
 
 
@@ -26,7 +26,7 @@ def csv_to_json(csv_file_path, json_file_path):
 
 
 if __name__ == '__main__':
-  csv_file_path = 'players.csv'  # Path to your CSV file
+  csv_file_path = 'processed-players.csv'  # Path to your CSV file
   json_file_path = 'players.json'  # Path to the output JSON file
 
   csv_to_json(csv_file_path, json_file_path)

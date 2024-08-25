@@ -5,6 +5,7 @@ export interface Player {
   position: string;
   team: string;
   bye: number;
+  star?: boolean;
 }
 
 export const getPlayers = (): Player[] => {
@@ -39,7 +40,9 @@ export const distanceFromOriginal = (
   filterFunction: (s: Player) => boolean
 ) => {
   const playerIndex = players.indexOf(player);
-  const originalIndex = data.filter(filterFunction).indexOf(player);
+  const originalIndex = data
+    .filter(filterFunction)
+    .findIndex((d) => d.name === player.name);
   return originalIndex - playerIndex;
 };
 

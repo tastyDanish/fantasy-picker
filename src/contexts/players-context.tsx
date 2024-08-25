@@ -17,9 +17,9 @@ type PlayersContextType = {
   players: Player[];
   defenses: Player[];
   kickers: Player[];
-  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
-  setKickers: React.Dispatch<React.SetStateAction<Player[]>>;
-  setDefenses: React.Dispatch<React.SetStateAction<Player[]>>;
+  setPlayers: (players: Player[]) => void;
+  setKickers: (players: Player[]) => void;
+  setDefenses: (players: Player[]) => void;
 };
 
 const PlayersContext = createContext<PlayersContextType | undefined>(undefined);
@@ -37,25 +37,59 @@ type PlayersProviderProps = {
 };
 
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [defenses, setDefenses] = useState<Player[]>([]);
-  const [kickers, setKickers] = useState<Player[]>([]);
+  const [players, setPlayers] = useState<Player[]>(() => {
+    const savedPlayers = localStorage.getItem("players");
+    return savedPlayers ? JSON.parse(savedPlayers) : getPlayers();
+  });
+
+  const [defenses, setDefenses] = useState<Player[]>(() => {
+    const savedDefenses = localStorage.getItem("defenses");
+    return savedDefenses ? JSON.parse(savedDefenses) : getDefenses();
+  });
+
+  const [kickers, setKickers] = useState<Player[]>(() => {
+    const savedKickers = localStorage.getItem("kickers");
+    return savedKickers ? JSON.parse(savedKickers) : getKickers();
+  });
 
   useEffect(() => {
-    setPlayers(getPlayers());
-    setDefenses(getDefenses());
-    setKickers(getKickers());
-  }, []);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("players", JSON.stringify(players));
+    }
+  }, [players]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("defenses", JSON.stringify(defenses));
+    }
+  }, [defenses]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("kickers", JSON.stringify(kickers));
+    }
+  }, [kickers]);
+  const setPlayersCallback = (newPlayers: Player[]) => {
+    setPlayers(newPlayers);
+  };
+
+  const setDefensesCallback = (newDefenses: Player[]) => {
+    setDefenses(newDefenses);
+  };
+
+  const setKickersCallback = (newKickers: Player[]) => {
+    setKickers(newKickers);
+  };
 
   return (
     <PlayersContext.Provider
       value={{
         players,
-        setPlayers,
+        setPlayers: setPlayersCallback,
         defenses,
-        setDefenses,
+        setDefenses: setDefensesCallback,
         kickers,
-        setKickers,
+        setKickers: setKickersCallback,
       }}>
       {children}
     </PlayersContext.Provider>

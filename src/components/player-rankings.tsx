@@ -4,21 +4,27 @@ import PlayerRank from "./player-rank";
 
 export type PlayerRankingsProps = {
   players: Player[];
-  onPlayerMove: (players: Player[]) => void;
+  updateList: (players: Player[]) => void;
   numberTeams: number;
   pickSpot: number;
 };
 const PlayerRankings = ({
   players,
-  onPlayerMove,
+  updateList,
   pickSpot,
   numberTeams,
 }: PlayerRankingsProps) => {
+  const updatePlayer = (playerData: Player) => {
+    const newList = players.map((p) =>
+      playerData.name === p.name ? { ...p, ...playerData } : p
+    );
+    updateList(newList);
+  };
   return (
     <Reorder.Group
       axis="y"
       values={players}
-      onReorder={onPlayerMove}
+      onReorder={updateList}
       style={{
         width: "full",
         display: "flex",
@@ -44,6 +50,7 @@ const PlayerRankings = ({
               index={index}
               draftSpot={index % numberTeams === pickSpot - 1}
               filterFunction={(s) => s.position !== "DST" && s.position !== "K"}
+              updatePlayer={updatePlayer}
             />
           </div>
         </Reorder.Item>

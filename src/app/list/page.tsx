@@ -1,16 +1,14 @@
 "use client";
 import NumberPicker from "@/components/number-picker";
 import PlayerRankings from "@/components/player-rankings";
-import PositionRankings from "@/components/position-rankings";
 import { usePlayers } from "@/contexts/players-context";
 import { useState } from "react";
 
-const defaultTeamNumber = 8;
+const defaultTeamNumber = 12;
 const defaultDraftSpot = 1;
 
 export default function Lists() {
-  const { players, defenses, kickers, setPlayers, setDefenses, setKickers } =
-    usePlayers();
+  const { players, defenses, kickers, setPlayers } = usePlayers();
 
   const [numberTeams, setNumberTeams] = useState(defaultTeamNumber);
   const [draftSpot, setDraftspot] = useState(defaultDraftSpot);
@@ -44,19 +42,7 @@ export default function Lists() {
               pickSpot={draftSpot}
               numberTeams={numberTeams}
               players={players}
-              onPlayerMove={setPlayers}
-            />
-            <PositionRankings
-              players={defenses}
-              onPlayerMove={setDefenses}
-              position="DST"
-              numTeams={numberTeams}
-            />
-            <PositionRankings
-              players={kickers}
-              onPlayerMove={setKickers}
-              position="K"
-              numTeams={numberTeams}
+              updateList={setPlayers}
             />
           </div>
         </>

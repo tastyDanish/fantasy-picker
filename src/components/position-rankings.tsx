@@ -27,6 +27,13 @@ const PositionRankings = ({
     return `${round}.${pickInRound}`;
   };
 
+  const updatePosition = (playerData: Player) => {
+    const newList = players.map((p) =>
+      playerData.name === p.name ? { ...p, ...playerData } : p
+    );
+    onPlayerMove(newList);
+  };
+
   return (
     <Reorder.Group
       axis="y"
@@ -50,6 +57,7 @@ const PositionRankings = ({
             player={player}
             index={index}
             draftSpot={false}
+            updatePlayer={updatePosition}
             filterFunction={(s) => s.position === position}
           />
         </Reorder.Item>
