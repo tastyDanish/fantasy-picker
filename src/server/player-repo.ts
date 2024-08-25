@@ -6,6 +6,7 @@ export interface Player {
   team: string;
   bye: number;
   star?: boolean;
+  disabled?: boolean;
 }
 
 export const getPlayers = (): Player[] => {

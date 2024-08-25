@@ -19,7 +19,6 @@ const PlayerRank = ({
   filterFunction,
   updatePlayer,
 }: PlayerRankProps) => {
-  const [disabled, setDisabled] = useState(false);
   const formatDistance = (distance: number) => {
     if (distance > 0) {
       return `+${distance}`;
@@ -33,7 +32,9 @@ const PlayerRank = ({
   return (
     <div
       className="flex gap-2 justify-start min-w-[23rem]"
-      onDoubleClick={() => setDisabled(!disabled)}>
+      onDoubleClick={() =>
+        updatePlayer({ ...player, disabled: !player.disabled })
+      }>
       <div className="text-red-400 w-10">{draftSpot ? "PICK" : ""}</div>
       <div onClick={() => updatePlayer({ ...player, star: !player.star })}>
         {player.star ? (
@@ -51,7 +52,7 @@ const PlayerRank = ({
 
       <div
         className={`${
-          disabled ? "text-slate-500" : "text-white"
+          player.disabled ? "text-slate-500" : "text-white"
         } grow flex gap-4 bg-slate-700 px-2 cursor-pointer justify-between border-slate-400 border rounded-md`}>
         <div className="flex gap-2 items-center ">
           <div>{index + 1}</div>
@@ -62,7 +63,7 @@ const PlayerRank = ({
         </div>
         <div
           style={{
-            color: disabled ? "#64748b" : positionColor(player.position),
+            color: player.disabled ? "#64748b" : positionColor(player.position),
           }}>
           {player.position}
         </div>
