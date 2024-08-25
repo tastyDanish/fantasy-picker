@@ -48,7 +48,11 @@ const PlayerRankings = ({
               players={players}
               player={player}
               index={index}
-              draftSpot={index % numberTeams === pickSpot - 1}
+              draftSpot={
+                Math.floor(index / numberTeams) > 0
+                  ? index % numberTeams === 12 - pickSpot
+                  : index % numberTeams === pickSpot - 1
+              }
               filterFunction={(s) => s.position !== "DST" && s.position !== "K"}
               updatePlayer={updatePlayer}
             />
