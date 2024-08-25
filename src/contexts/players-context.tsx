@@ -37,35 +37,48 @@ type PlayersProviderProps = {
 };
 
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
-  const [players, setPlayers] = useState<Player[]>(() => {
-    const savedPlayers = localStorage.getItem("players");
-    return savedPlayers ? JSON.parse(savedPlayers) : getPlayers();
-  });
+  const [players, setPlayers] = useState<Player[]>([]);
 
-  const [defenses, setDefenses] = useState<Player[]>(() => {
-    const savedDefenses = localStorage.getItem("defenses");
-    return savedDefenses ? JSON.parse(savedDefenses) : getDefenses();
-  });
+  const [defenses, setDefenses] = useState<Player[]>([]);
 
-  const [kickers, setKickers] = useState<Player[]>(() => {
-    const savedKickers = localStorage.getItem("kickers");
-    return savedKickers ? JSON.parse(savedKickers) : getKickers();
-  });
+  const [kickers, setKickers] = useState<Player[]>([]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    console.log("here are players: ", localStorage.getItem("players"));
+    const localStoragePlayers = localStorage.getItem("players")
+      ? JSON.parse(localStorage.getItem("players") ?? "")
+      : getPlayers();
+    setPlayers(localStoragePlayers);
+  }, []);
+
+  useEffect(() => {
+    const localStoragePlayers = localStorage.getItem("defenses")
+      ? JSON.parse(localStorage.getItem("defenses") ?? "")
+      : getDefenses();
+    setDefenses(localStoragePlayers);
+  }, []);
+
+  useEffect(() => {
+    const localStoragePlayers = localStorage.getItem("kickers")
+      ? JSON.parse(localStorage.getItem("kickers") ?? "")
+      : getKickers();
+    setKickers(localStoragePlayers);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && players.length > 0) {
       localStorage.setItem("players", JSON.stringify(players));
     }
   }, [players]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && defenses.length > 0) {
       localStorage.setItem("defenses", JSON.stringify(defenses));
     }
   }, [defenses]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && kickers.length > 0) {
       localStorage.setItem("kickers", JSON.stringify(kickers));
     }
   }, [kickers]);
