@@ -11,17 +11,19 @@ const Navigation = ({
         <Link
           href="/"
           passHref>
-          <button className="border border-white p-2">pick players</button>
+          <button className="border border-white p-2">Pick Players</button>
         </Link>
         <Link
           href="/list"
           passHref>
-          <button className="border border-white p-2">view list</button>
+          <button className="border border-white p-2">Rank Players</button>
         </Link>
         <Link
           href="/other-lists"
           passHref>
-          <button className="border border-white p-2">view other list</button>
+          <button className="border border-white p-2">
+            Rank Kickers and Defenders
+          </button>
         </Link>
       </div>
       <div>{children}</div>
