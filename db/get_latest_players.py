@@ -1,4 +1,5 @@
 import csv
+import re
 
 def convert_value(key, value):
     """Convert string value based on the key."""
@@ -26,8 +27,10 @@ def csv_to_csv(input_csv_file_path, output_csv_file_path):
             
             # Convert each row and write to the new CSV file
             for row in csv_reader:
-                # Ensure 'POS' value is not None before calling replace
-                position = row['POS'].replace('1', '') if row['POS'] else ''
+                raw_pos = row['POS'] or ''
+                # remove all digits
+                position = re.sub(r'\d+', '', raw_pos)
+
                 converted_row = {
                     'name': row['Player'],
                     'team': row['Team'],
@@ -37,7 +40,7 @@ def csv_to_csv(input_csv_file_path, output_csv_file_path):
                 csv_writer.writerow(converted_row)
 
 if __name__ == '__main__':
-    input_csv_file_path = 'latest-players.csv'  # Path to your input CSV file
+    input_csv_file_path = 'FantasyPros_2025_Overall_ADP_Rankings.csv'  # Path to your input CSV file
     output_csv_file_path = 'processed-players.csv'  # Path to the output CSV file
 
     csv_to_csv(input_csv_file_path, output_csv_file_path)
