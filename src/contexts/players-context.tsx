@@ -36,7 +36,7 @@ type PlayersProviderProps = {
   children: ReactNode;
 };
 
-const playerStorageKey = "players-1";
+const playerStorageKey = "players-2";
 
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [players, setPlayers] = useState<Player[]>([]);
