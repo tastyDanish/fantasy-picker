@@ -46,7 +46,6 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [kickers, setKickers] = useState<Player[]>([]);
 
   useEffect(() => {
-    console.log("here are players: ", localStorage.getItem(playerStorageKey));
     const localStoragePlayers = localStorage.getItem(playerStorageKey)
       ? JSON.parse(localStorage.getItem(playerStorageKey) ?? "")
       : getPlayers();

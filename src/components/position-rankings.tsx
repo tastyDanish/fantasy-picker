@@ -58,7 +58,6 @@ const PositionRankings = ({
             index={index}
             draftSpot={false}
             updatePlayer={updatePosition}
-            filterFunction={(s) => s.position === position}
           />
         </Reorder.Item>
       ))}

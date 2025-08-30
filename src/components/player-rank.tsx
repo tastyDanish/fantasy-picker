@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Player, distanceFromOriginal } from "@/server/player-repo";
 import { positionColor } from "@/utils/colors";
 import { useState } from "react";
@@ -8,7 +9,6 @@ export type PlayerRankProps = {
   player: Player;
   index: number;
   draftSpot: boolean;
-  filterFunction: (s: Player) => boolean;
   updatePlayer: (player: Player) => void;
 };
 const PlayerRank = ({
@@ -16,7 +16,6 @@ const PlayerRank = ({
   player,
   index,
   draftSpot,
-  filterFunction,
   updatePlayer,
 }: PlayerRankProps) => {
   const formatDistance = (distance: number) => {
@@ -31,11 +30,18 @@ const PlayerRank = ({
 
   return (
     <div
-      className="flex gap-2 justify-start min-w-[23rem]"
+      className="flex gap-2 justify-start w-full my-2"
       onDoubleClick={() =>
         updatePlayer({ ...player, disabled: !player.disabled })
       }>
       <div className="text-red-400 w-10">{draftSpot ? "PICK" : ""}</div>
+      <div
+        className={cn(
+          "w-8 text-left",
+          Math.floor(index) % 2 === 0 ? "text-pink-300" : "text-orange-300"
+        )}>
+        {index}
+      </div>
       <div onClick={() => updatePlayer({ ...player, star: !player.star })}>
         {player.star ? (
           <Star
@@ -54,8 +60,7 @@ const PlayerRank = ({
         className={`${
           player.disabled ? "text-slate-500" : "text-white"
         } grow flex gap-4 bg-slate-700 px-2 cursor-pointer justify-between border-slate-400 border rounded-md`}>
-        <div className="flex gap-2 items-center ">
-          <div>{index + 1}</div>
+        <div className="flex gap-2 items-center grow">
           <div>{player.name}</div>
           <div className="text-xs">
             {player.position !== "DST" ? player.team : ""}
@@ -69,7 +74,7 @@ const PlayerRank = ({
         </div>
       </div>
       <div className="text-white w-4">
-        {formatDistance(distanceFromOriginal(players, player, filterFunction))}
+        {formatDistance(distanceFromOriginal(players, player))}
       </div>
     </div>
   );

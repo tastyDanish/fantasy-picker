@@ -1,6 +1,7 @@
 "use client";
 import NumberPicker from "@/components/number-picker";
 import PlayerRankings from "@/components/player-rankings";
+import PositionFilter, { Positions } from "@/components/position-filter";
 import { usePlayers } from "@/contexts/players-context";
 import { useState } from "react";
 
@@ -8,10 +9,12 @@ const defaultTeamNumber = 12;
 const defaultDraftSpot = 1;
 
 export default function Lists() {
-  const { players, defenses, kickers, setPlayers } = usePlayers();
+  const { players, setPlayers } = usePlayers();
 
   const [numberTeams, setNumberTeams] = useState(defaultTeamNumber);
   const [draftSpot, setDraftspot] = useState(defaultDraftSpot);
+  const [filterPosition, setFilterPosition] = useState<Positions>("none");
+  const [showADP, setShowADP] = useState(false);
   return (
     <div className="w-full ">
       {players.length > 0 && (
@@ -36,13 +39,20 @@ export default function Lists() {
                 numberMin={1}
               />
             </div>
+            <div>
+              <PositionFilter
+                value={filterPosition}
+                setValue={setFilterPosition}
+              />
+            </div>
           </div>
-          <div className="flex w-full justify-center gap-8">
+          <div className="flex w-full justify-center">
             <PlayerRankings
               pickSpot={draftSpot}
               numberTeams={numberTeams}
               players={players}
               updateList={setPlayers}
+              filterPosition={filterPosition}
             />
           </div>
         </>

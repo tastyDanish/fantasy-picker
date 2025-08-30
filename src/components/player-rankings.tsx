@@ -1,18 +1,21 @@
 import { Player } from "@/server/player-repo";
 import { Reorder } from "framer-motion";
 import PlayerRank from "./player-rank";
+import { Positions } from "./position-filter";
 
 export type PlayerRankingsProps = {
   players: Player[];
   updateList: (players: Player[]) => void;
   numberTeams: number;
   pickSpot: number;
+  filterPosition: Positions;
 };
 const PlayerRankings = ({
   players,
   updateList,
   pickSpot,
   numberTeams,
+  filterPosition,
 }: PlayerRankingsProps) => {
   const updatePlayer = (playerData: Player) => {
     const newList = players.map((p) =>
@@ -51,25 +54,21 @@ const PlayerRankings = ({
         alignItems: "center",
         justifyItems: "center",
         paddingTop: "30px",
-        gap: "1rem",
       }}>
       {players.map((player, index) => (
         <Reorder.Item
           key={player.name}
-          value={player}>
-          <div className="flex flex-col gap-2">
-            {index % numberTeams === 0 && (
-              <div className="bg-white w-80 p-2">ROUND {round(index)}</div>
-            )}
+          value={player}
+          className="w-full">
+          {filterPosition == player.position || filterPosition === "none" ? (
             <PlayerRank
               players={players}
               player={player}
-              index={index}
+              index={round(index) + 0.01 * pickNumber(index)}
               draftSpot={isPick(index)}
-              filterFunction={(s) => s.position !== "DST" && s.position !== "K"}
               updatePlayer={updatePlayer}
             />
-          </div>
+          ) : null}
         </Reorder.Item>
       ))}
     </Reorder.Group>

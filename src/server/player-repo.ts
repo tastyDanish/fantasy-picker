@@ -13,7 +13,7 @@ export const getPlayers = (): Player[] => {
   if (data.length === 0) {
     return [];
   }
-  return data.filter((s) => s.position !== "DST" && s.position !== "K");
+  return data;
 };
 
 export const getKickers = (): Player[] => {
@@ -35,15 +35,9 @@ export const originalPosition = (player: Player) => {
   return index;
 };
 
-export const distanceFromOriginal = (
-  players: Player[],
-  player: Player,
-  filterFunction: (s: Player) => boolean
-) => {
+export const distanceFromOriginal = (players: Player[], player: Player) => {
   const playerIndex = players.indexOf(player);
-  const originalIndex = data
-    .filter(filterFunction)
-    .findIndex((d) => d.name === player.name);
+  const originalIndex = data.findIndex((d) => d.name === player.name);
   return originalIndex - playerIndex;
 };
 
