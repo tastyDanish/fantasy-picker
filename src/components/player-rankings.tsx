@@ -9,6 +9,7 @@ export type PlayerRankingsProps = {
   numberTeams: number;
   pickSpot: number;
   filterPosition: Positions;
+  reorderEnabled: boolean;
 };
 const PlayerRankings = ({
   players,
@@ -16,6 +17,7 @@ const PlayerRankings = ({
   pickSpot,
   numberTeams,
   filterPosition,
+  reorderEnabled,
 }: PlayerRankingsProps) => {
   const updatePlayer = (playerData: Player) => {
     const newList = players.map((p) =>
@@ -59,7 +61,8 @@ const PlayerRankings = ({
         <Reorder.Item
           key={player.name}
           value={player}
-          className="w-full">
+          className="w-full"
+          drag={reorderEnabled}>
           {filterPosition == player.position || filterPosition === "none" ? (
             <PlayerRank
               players={players}

@@ -14,6 +14,7 @@ import React, {
 } from "react";
 
 type PlayersContextType = {
+  defaultList: Player[];
   players: Player[];
   defenses: Player[];
   kickers: Player[];
@@ -36,9 +37,10 @@ type PlayersProviderProps = {
   children: ReactNode;
 };
 
-const playerStorageKey = "players-2";
+const playerStorageKey = "players-3";
 
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
+  const defaultList = getPlayers();
   const [players, setPlayers] = useState<Player[]>([]);
 
   const [defenses, setDefenses] = useState<Player[]>([]);
@@ -98,6 +100,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   return (
     <PlayersContext.Provider
       value={{
+        defaultList,
         players,
         setPlayers: setPlayersCallback,
         defenses,

@@ -40,7 +40,7 @@ const PlayerRank = ({
           "w-8 text-left",
           Math.floor(index) % 2 === 0 ? "text-pink-300" : "text-orange-300"
         )}>
-        {index}
+        {index.toFixed(2)}
       </div>
       <div onClick={() => updatePlayer({ ...player, star: !player.star })}>
         {player.star ? (
@@ -59,7 +59,7 @@ const PlayerRank = ({
       <div
         className={`${
           player.disabled ? "text-slate-500" : "text-white"
-        } grow flex gap-4 bg-slate-700 px-2 cursor-pointer justify-between border-slate-400 border rounded-md`}>
+        } grow flex gap-4 bg-slate-700 px-2 justify-between border-slate-400 border rounded-md`}>
         <div className="flex gap-2 items-center grow">
           <div>{player.name}</div>
           <div className="text-xs">

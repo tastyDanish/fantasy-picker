@@ -12,7 +12,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <PlayersProvider>
-          <main className="flex min-h-screen flex-col items-center w-full bg-gray-900">
+          <main className="flex min-h-dvh flex-col items-center w-full bg-gray-900 pb-10">
             <Navigation>{children}</Navigation>
           </main>
         </PlayersProvider>
