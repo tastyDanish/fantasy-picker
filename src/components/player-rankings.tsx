@@ -31,7 +31,7 @@ const PlayerRankings = ({
     } else if (round(index) === 2) {
       return pickNumber(index) === numberTeams + 1 - pickSpot;
     } else {
-      if (round(index) % 2 !== 0) {
+      if (round(index) % 2 === 0) {
         return pickNumber(index) === pickSpot;
       } else {
         return pickNumber(index) === numberTeams + 1 - pickSpot;
