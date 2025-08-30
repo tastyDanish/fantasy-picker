@@ -36,6 +36,8 @@ type PlayersProviderProps = {
   children: ReactNode;
 };
 
+const playerStorageKey = "players-1";
+
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [players, setPlayers] = useState<Player[]>([]);
 
@@ -44,9 +46,9 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const [kickers, setKickers] = useState<Player[]>([]);
 
   useEffect(() => {
-    console.log("here are players: ", localStorage.getItem("players"));
-    const localStoragePlayers = localStorage.getItem("players")
-      ? JSON.parse(localStorage.getItem("players") ?? "")
+    console.log("here are players: ", localStorage.getItem(playerStorageKey));
+    const localStoragePlayers = localStorage.getItem(playerStorageKey)
+      ? JSON.parse(localStorage.getItem(playerStorageKey) ?? "")
       : getPlayers();
     setPlayers(localStoragePlayers);
   }, []);
@@ -67,7 +69,7 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
 
   useEffect(() => {
     if (typeof window !== "undefined" && players.length > 0) {
-      localStorage.setItem("players", JSON.stringify(players));
+      localStorage.setItem(playerStorageKey, JSON.stringify(players));
     }
   }, [players]);
 
