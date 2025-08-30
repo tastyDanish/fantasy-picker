@@ -20,6 +20,25 @@ const PlayerRankings = ({
     );
     updateList(newList);
   };
+
+  const round = (index: number) => Math.floor(index / numberTeams) + 1;
+
+  const pickNumber = (index: number) => (index % numberTeams) + 1;
+
+  const isPick = (index: number) => {
+    if (round(index) === 1) {
+      return pickNumber(index) === pickSpot;
+    } else if (round(index) === 2) {
+      return pickNumber(index) === numberTeams + 1 - pickSpot;
+    } else {
+      if (round(index) % 2 !== 0) {
+        return pickNumber(index) === pickSpot;
+      } else {
+        return pickNumber(index) === numberTeams + 1 - pickSpot;
+      }
+    }
+  };
+
   return (
     <Reorder.Group
       axis="y"
@@ -40,19 +59,13 @@ const PlayerRankings = ({
           value={player}>
           <div className="flex flex-col gap-2">
             {index % numberTeams === 0 && (
-              <div className="bg-white w-80 p-2">
-                ROUND {index / numberTeams + 1}
-              </div>
+              <div className="bg-white w-80 p-2">ROUND {round(index)}</div>
             )}
             <PlayerRank
               players={players}
               player={player}
               index={index}
-              draftSpot={
-                Math.floor(index / numberTeams) > 0
-                  ? index % numberTeams === 12 - pickSpot
-                  : index % numberTeams === pickSpot - 1
-              }
+              draftSpot={isPick(index)}
               filterFunction={(s) => s.position !== "DST" && s.position !== "K"}
               updatePlayer={updatePlayer}
             />
