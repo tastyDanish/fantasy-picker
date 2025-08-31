@@ -1,3 +1,4 @@
+import { usePlayers } from "@/contexts/players-context";
 import { cn } from "@/lib/utils";
 import { Player, distanceFromOriginal } from "@/server/player-repo";
 import { positionColor } from "@/utils/colors";
@@ -6,18 +7,38 @@ import { Star } from "react-feather";
 
 export type PlayerRankProps = {
   players: Player[];
+  isAdp: boolean;
   player: Player;
   index: number;
   draftSpot: boolean;
   updatePlayer: (player: Player) => void;
 };
 const PlayerRank = ({
+  isAdp,
   players,
   player,
   index,
   draftSpot,
   updatePlayer,
 }: PlayerRankProps) => {
+  const { isStar, isGrey } = usePlayers();
+
+  const shouldStar = () => {
+    if (isAdp) {
+      return isStar(player.name);
+    } else {
+      return player.star;
+    }
+  };
+
+  const shouldDisable = () => {
+    if (isAdp) {
+      return isGrey(player.name);
+    } else {
+      return player.disabled;
+    }
+  };
+
   const formatDistance = (distance: number) => {
     if (distance > 0) {
       return `+${distance}`;
@@ -32,7 +53,7 @@ const PlayerRank = ({
     <div
       className="flex gap-2 justify-start w-full my-2"
       onDoubleClick={() =>
-        updatePlayer({ ...player, disabled: !player.disabled })
+        updatePlayer({ ...player, disabled: !shouldDisable() })
       }>
       <div className="text-red-400 w-10">{draftSpot ? "PICK" : ""}</div>
       <div
@@ -42,8 +63,8 @@ const PlayerRank = ({
         )}>
         {index.toFixed(2)}
       </div>
-      <div onClick={() => updatePlayer({ ...player, star: !player.star })}>
-        {player.star ? (
+      <div onClick={() => updatePlayer({ ...player, star: !shouldStar() })}>
+        {shouldStar() ? (
           <Star
             color="#f59e0b"
             className="fill-amber-500"
@@ -58,7 +79,7 @@ const PlayerRank = ({
 
       <div
         className={`${
-          player.disabled ? "text-slate-500" : "text-white"
+          shouldDisable() ? "text-slate-500" : "text-white"
         } grow flex gap-4 bg-slate-700 px-2 justify-between border-slate-400 border rounded-md`}>
         <div className="flex gap-2 items-center grow">
           <div>{player.name}</div>
@@ -68,7 +89,7 @@ const PlayerRank = ({
         </div>
         <div
           style={{
-            color: player.disabled ? "#64748b" : positionColor(player.position),
+            color: shouldDisable() ? "#64748b" : positionColor(player.position),
           }}>
           {player.position}
         </div>

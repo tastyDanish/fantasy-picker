@@ -21,6 +21,8 @@ type PlayersContextType = {
   setPlayers: (players: Player[]) => void;
   setKickers: (players: Player[]) => void;
   setDefenses: (players: Player[]) => void;
+  isStar: (playerName: string) => boolean;
+  isGrey: (playerName: string) => boolean;
 };
 
 const PlayersContext = createContext<PlayersContextType | undefined>(undefined);
@@ -97,10 +99,19 @@ export const PlayersProvider = ({ children }: PlayersProviderProps) => {
     setKickers(newKickers);
   };
 
+  const isStar = (playerName: string) => {
+    return players.find((p) => p.name === playerName)?.star ?? false;
+  };
+
+  const isGrey = (playerName: string) => {
+    return players.find((p) => p.name === playerName)?.disabled ?? false;
+  };
   return (
     <PlayersContext.Provider
       value={{
         defaultList,
+        isStar,
+        isGrey,
         players,
         setPlayers: setPlayersCallback,
         defenses,

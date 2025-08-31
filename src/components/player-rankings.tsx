@@ -2,25 +2,29 @@ import { Player } from "@/server/player-repo";
 import { Reorder } from "framer-motion";
 import PlayerRank from "./player-rank";
 import { Positions } from "./position-filter";
+import { usePlayers } from "@/contexts/players-context";
 
 export type PlayerRankingsProps = {
   players: Player[];
   updateList: (players: Player[]) => void;
   numberTeams: number;
+  isAdp: boolean;
   pickSpot: number;
   filterPosition: Positions;
   reorderEnabled: boolean;
 };
 const PlayerRankings = ({
   players,
+  isAdp,
   updateList,
   pickSpot,
   numberTeams,
   filterPosition,
   reorderEnabled,
 }: PlayerRankingsProps) => {
+  const { players: localPlayers } = usePlayers();
   const updatePlayer = (playerData: Player) => {
-    const newList = players.map((p) =>
+    const newList = localPlayers.map((p) =>
       playerData.name === p.name ? { ...p, ...playerData } : p
     );
     updateList(newList);
@@ -65,6 +69,7 @@ const PlayerRankings = ({
           drag={reorderEnabled}>
           {filterPosition == player.position || filterPosition === "none" ? (
             <PlayerRank
+              isAdp={isAdp}
               players={players}
               player={player}
               index={round(index) + 0.01 * pickNumber(index)}

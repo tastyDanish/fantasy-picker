@@ -10,13 +10,13 @@ export type PlayerRankingsProps = {
   players: Player[];
   onPlayerMove: (players: Player[]) => void;
   position: string;
+  isAdp: boolean;
   numTeams: number;
 };
 const PositionRankings = ({
   players,
   onPlayerMove,
-  position,
-  numTeams,
+  isAdp,
 }: PlayerRankingsProps) => {
   const convertToRoundPick = (
     draftPosition: number,
@@ -54,6 +54,7 @@ const PositionRankings = ({
           value={player}>
           <PlayerRank
             players={players}
+            isAdp={isAdp}
             player={player}
             index={index}
             draftSpot={false}

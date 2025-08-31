@@ -56,6 +56,7 @@ export default function Lists() {
               pickSpot={draftSpot}
               numberTeams={numberTeams}
               players={showADP ? defaultList : players}
+              isAdp={showADP}
               updateList={setPlayers}
               reorderEnabled={!showADP && filterPosition === "none"}
               filterPosition={filterPosition}
