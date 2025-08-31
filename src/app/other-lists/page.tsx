@@ -20,12 +20,14 @@ export default function OtherLists() {
         <PositionRankings
           players={defenses}
           onPlayerMove={setDefenses}
+          isAdp={false}
           position="DST"
           numTeams={numberTeams}
         />
         <PositionRankings
           players={kickers}
           onPlayerMove={setKickers}
+          isAdp={false}
           position="K"
           numTeams={numberTeams}
         />
