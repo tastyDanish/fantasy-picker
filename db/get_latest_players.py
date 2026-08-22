@@ -40,7 +40,7 @@ def csv_to_csv(input_csv_file_path, output_csv_file_path):
                 csv_writer.writerow(converted_row)
 
 if __name__ == '__main__':
-    input_csv_file_path = 'FantasyPros_2025_Overall_ADP_Rankings.csv'  # Path to your input CSV file
+    input_csv_file_path = 'FantasyPros_2026_Overall_ADP_Rankings.csv'  # Path to your input CSV file
     output_csv_file_path = 'processed-players.csv'  # Path to the output CSV file
 
     csv_to_csv(input_csv_file_path, output_csv_file_path)
