@@ -39,7 +39,7 @@ type PlayersProviderProps = {
   children: ReactNode;
 };
 
-const playerStorageKey = "players-4";
+const playerStorageKey = "players-5";
 
 export const PlayersProvider = ({ children }: PlayersProviderProps) => {
   const defaultList = getPlayers();
